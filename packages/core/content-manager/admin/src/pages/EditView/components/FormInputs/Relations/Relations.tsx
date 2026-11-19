@@ -752,6 +752,9 @@ const RelationModalWithContext = ({
 
   React.useLayoutEffect(() => {
     setTextValue('');
+    // The text input is cleared, so the search must be reset too, otherwise the stale search term
+    // would keep filtering the available options when the dropdown is reopened.
+    setSearchParams((s) => (s._q === '' && s.page === 1 ? s : { ...s, _q: '', page: 1 }));
   }, [fieldValue]);
 
   const handleSearch = async (search: string) => {
